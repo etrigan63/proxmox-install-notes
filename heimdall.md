@@ -13,7 +13,6 @@ The only way to migrate is to install the Heimdall LXC container, run it once, s
    backgrounds folder
    icons folder
    app.sqlite app database
-
    ```
 2. The easiest thing to do is download the whole `config` folder using an SFTP client.
 
@@ -28,7 +27,5 @@ The only way to migrate is to install the Heimdall LXC container, run it once, s
    `/vmpool/subvol-100-disk-0` in my case.
 
 4. From there, navigate to `/opt/Heimdall/database` and upload `app.sqlite` overwriting the one that is there.
-5. Then navigate to `/opt/Heimdall/storage/app/public` and upload `avatars`, `backgrounds`, and `icons` folders. If there is a folder called `supportedapps` (note case)m copy the contents of the `SupportedApps` folder you previously downloaded.
+5. Then navigate to `/opt/Heimdall/storage/app/public` and upload `avatars`, `backgrounds`, and `icons` folders. If there is a folder called `supportedapps` (note case) copy the contents of the `SupportedApps` folder you previously downloaded.
 6. Restart the Heimdall container and your account plus all of your bookmarks should now be there.
-```
-
