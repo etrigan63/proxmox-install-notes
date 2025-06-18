@@ -9,9 +9,12 @@
    `apt install gcc make`
    `apt install  pve-headers-`uname -r``
 4. Make the Nvidia driver package executable
+
    `chmod +x NVIDIA-Linux-x86_64-version.number.run`
+
    (change `version.number` to match whatever you downloaded)
 5. Run the installer.
+
    `./NVIDIA-Linux-x86_64-version.number.run`
    The installer will blacklist the `nouveau` driver for you.
 6. Reboot the server.
@@ -19,9 +22,14 @@
 8. Edit `modules.conf`.
    `nano /etc/modules-load.d/modules.conf`
 9. Add in:
-   `nvidia`
-   `nvidia-modeset`
-   `nvidia_uvm`
+```
+```
+   nvidia
+   nvidia-modeset
+   nvidia_uvm
+```
+
+```
 10. Save the file and regenerate the kernel intramfs:
    `update-intramfs -u`
 11. Create the udev rules:
