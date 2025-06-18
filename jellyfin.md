@@ -19,7 +19,8 @@
    The installer will blacklist the `nouveau` driver for you.
 6. Reboot the server.
 7. Run `nvidia-smi` to make sure the host sees the GPU.
-8. Edit `modules.conf`.
+8. Edit `modules.conf`:
+
    `nano /etc/modules-load.d/modules.conf`
 9. Add in:
 ```
@@ -28,8 +29,10 @@
    nvidia_uvm
 ```
 10. Save the file and regenerate the kernel intramfs:
+
    `update-intramfs -u`
 11. Create the udev rules:
+
    `nano /etc/udev/rules.d/70-nvidia.rules`
    Add these lines:
 ```
