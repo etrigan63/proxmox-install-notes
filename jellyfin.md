@@ -6,8 +6,8 @@
 2. Upload drivers to Proxmox host via SFTP
 3. Make sure `gcc`, `make` and Linux kernel header files are installed.
    ```
-   `apt install gcc make`
-   `apt install  pve-headers-`uname -r``
+   apt install gcc make
+   apt install  pve-headers-`uname -r`
 4. Make the Nvidia driver package executable
 
    `chmod +x NVIDIA-Linux-x86_64-version.number.run`
@@ -23,23 +23,22 @@
    `nano /etc/modules-load.d/modules.conf`
 9. Add in:
 ```
-```
    nvidia
    nvidia-modeset
    nvidia_uvm
-```
-
 ```
 10. Save the file and regenerate the kernel intramfs:
    `update-intramfs -u`
 11. Create the udev rules:
    `nano /etc/udev/rules.d/70-nvidia.rules`
    Add these lines:
-   `KERNEL=="nvidia", RUN+="/bin/bash -c '/usr/bin/nvidia-smi -L && /bin/chmod 666 /dev/nvidia*'"
+```
+   KERNEL=="nvidia", RUN+="/bin/bash -c '/usr/bin/nvidia-smi -L && /bin/chmod 666 /dev/nvidia*'"
    KERNEL=="nvidia_modeset", RUN+="/bin/bash -c '/usr/bin/nvidia-modprobe -c0 -m && /bin/chmod 666 /dev/nvidia-modeset*'"
-   KERNEL=="nvidia_uvm", RUN+="/bin/bash -c '/usr/bin/nvidia-modprobe -c0 -u && /bin/chmod 666 /dev/nvidia-uvm*'`
-12. Save and reboot the server.
-13. Run `nvidia-smi` to double check.
+   KERNEL=="nvidia_uvm", RUN+="/bin/bash -c '/usr/bin/nvidia-modprobe -c0 -u && /bin/chmod 666 /dev/nvidia-uvm*'
+```
+13. Save and reboot the server.
+14. Run `nvidia-smi` to double check.
 
 ### Part 2: Install Jellyfin
 ----------
