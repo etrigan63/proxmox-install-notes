@@ -5,9 +5,10 @@
 1. Download Nvidia Linux drivers from Nvidia website.
 2. Upload drivers to Proxmox host via SFTP
 3. Make sure `gcc`, `make` and Linux kernel header files are installed.
-   ```
+```
    apt install gcc make
    apt install  pve-headers-`uname -r`
+```
 4. Make the Nvidia driver package executable
 ```
    chmod +x NVIDIA-Linux-x86_64-version.number.run
