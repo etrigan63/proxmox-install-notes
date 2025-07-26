@@ -1,5 +1,5 @@
 ### IMMICH CONTAINER SETUP 
-
+----------
 
 1. Install Immich container via the helper script. Open the host console and type:
    ```
