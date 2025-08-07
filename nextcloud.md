@@ -6,21 +6,14 @@
 1. Create a dataset.
 2. Set owner/group to `root/root`.
 3. Set ACL to `POSIX_HOME`. This sets permissions to 770 which is required for Nextcloud.
-4. Create NFS share on the Shares panel. Make sure to add the local network in CIDR notation. Then click on Advanced Options and set the Maproot User and Maproot Group each to `root`. This allows the share to be accessed as root from the container.
+4. Create NFS share on the Shares panel. Make sure to add the local network in CIDR notation. Then click on Advanced Options and set the Mapall User and Mapall Group each to `root`. This allows the share to be accessed as root from the container.
 
 ### Proxmox Host Setup
 
-1. Open the host console.
-2. Navigate to the `/mnt` directory and create a directory that will server as the mount point for the NFS share. It should be owned by `root`.
-3. Edit `/etc/fstab` and add the following on the bottom:
-   ```
-   truenas-ip-address:/path/to/nfs/share /mnt/folder-name nfs defaults 0 0
-   ```
-   where `truenas-ip-address` is the ip address of the TrueNAS server, `/path/to/nfs/share` is the full path of the NFS share and `folder-name` is the folder you created in step 2 of this section.
-4. Save `/etc/fstab`.
-5. Run `systemctl daemon-reload` to activate the updated fstab.
-6. Run `mount -a`. If no error is returned, then proceed. If you get an error, double check what you wrote in `/etc/fstab` and repeat steps 4-6.
-7. Go to the `/mnt` directory and see if the share is mounted. Test that you can read/write to the share by creating and deleting a test file. The `touch` command is perfect for this command is perfect for this.
+1. Use the Proxmox web interface to mount the NFS share locally.
+2. `chown -R 100000:100000 /path/to/nextcloud` - This sets the owner of the mount to immich:root inside the container.
+3. `chmod -R 770 /path/to/nextcloud` - To make sure file permissions are correct.
+
 
 ### Nextcloud LXC Container Setup
 
@@ -47,7 +40,13 @@
 12. Enter `snap install nextcloud`. If it errors, do it again. This is fairly normal.
 13. Shutdown the container.
 14. Open the host console.
-15. Enter `pct set -mp0 /mnt/folder-name,mp=/media/folder-name,uid=0,gid=0` - This binds the host share to the container and sets ownership to `root` inside the container.
+15. Type the following:
+   ```
+   pct set container_id -mp0 /path/to/nextcloud,mp=/media/nextcloud
+   ```
+   where `container_id` is the number listed in front of the container on the dashboard
+   and `/path/to/nextcloud` is the location of the media files on the host (in my case it is an NFS share mounted on `/mnt/pve/nextcloud`)
+
 16. Restart the container.
 17. Open the container console and check that the bind is successful. Test that the `root` account owns the share and the permissions are 770. Assuming this works, we are ready to configure the snap.
 18. Enter `snap connect nextcloud:removable-media` to grant the snap access to the `/media` folder.
