@@ -82,3 +82,7 @@
   These commands apply to Linux & Mac. Adjust for actual file location.
 
 7. Upload the file to the new server and run data import. It will take a while, but the upload will complete.
+
+### Proxmox backup notes.
+
+1. Due to the use of snaps inside this container, the only way to back it up is to shut it down during the backup. This will kill the uptime since I don't have a cluster. Luckily, I only backup containers once a month.
